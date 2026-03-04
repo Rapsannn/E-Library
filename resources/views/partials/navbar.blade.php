@@ -52,9 +52,13 @@
                                 <!-- Active: "bg-gray-100 outline-hidden", Not Active: "" -->
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
                                     tabindex="-1" id="user-menu-item-0">{{ auth()->user()->username }}</a>
+                                    @if(auth()->user()->role == 'admin')
+                                <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 transition" role="menuitem"
+                                    tabindex="-1" id="user-menu-item-0">Dashboard</a>
+                                    @endif
                                 <form action="/logout" method="POST">
                                     @csrf
-                                    <button type="submit" class="block px-4 py-2 text-sm text-gray-700 cursor-pointer" onclick="return confirm('Are you sure you want to logout?')" role="menuitem"
+                                    <button type="submit" class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-300 transition w-full text-left" onclick="return confirm('Are you sure you want to logout?')" role="menuitem"
                                         tabindex="-1" id="user-menu-item-2">Sign out</button>
                                 </form>
                             </div>
@@ -115,6 +119,9 @@
                     </div>
                 </div>
                 <div class="mt-3 space-y-1 px-2">
+                    @if (auth()->user()->role == 'admin')
+                    <a href="/dashboard" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Dashboard</a>
+                    @endif
                     <form action="/logout" method="POST">
                         @csrf
                         <button type="submit" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign
