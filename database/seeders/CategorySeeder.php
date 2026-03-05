@@ -20,11 +20,11 @@ class CategorySeeder extends Seeder
             ],
             [
                 'name' => 'Komik',
-                'slug' => 'Komik'
+                'slug' => 'komik'
             ],
             [
                 'name' => 'Sejarah Islam',
-                'slug' => 'Sejarah Islam'
+                'slug' => 'sejarah islam'
             ]
         ]);
     }
