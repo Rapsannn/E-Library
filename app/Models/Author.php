@@ -11,6 +11,11 @@ class Author extends Model
 
     protected $guarded = ['id'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function books()
     {
         return $this->hasMany(Book::class);

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\Homecontroller;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,5 @@ Route::prefix('dashboard')->middleware(['auth', 'isAdmin'])->group(function () {
     
     
     Route::resource('author', AuthorController::class);
+    Route::resource('user', UserController::class);
 });
