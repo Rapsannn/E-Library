@@ -14,15 +14,16 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function register()
+    public function registration()
     {
-        return view('auth.register');
+        return view('auth.registration');
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255|min:2|regex:/^[a-zA-Z\s]+$/',
+            'slug' => 'required|unique:users',
             'email' => 'required|email:dns|unique:users',
             'username' => 'required|unique:users|min:3|max:255|regex:/^[a-zA-Z0-9]+$/',
             'password' => 'required|min:5|max:255',

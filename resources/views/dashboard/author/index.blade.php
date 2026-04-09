@@ -53,7 +53,7 @@
                             </form>
                             <p>|</p>
                             <div class="text-yellow-500 hover:text-yellow-700">
-                              <a href="/dashboard/author/{{ $author->slug }}/edit"><i class="fa-utility fa-semibold fa-pen-to-square"></i> Edit</a>
+                              <a href="/dashboard/author/{{ $author->slug }}/edit"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                             </div>
                     </td>
                 </tr>  
