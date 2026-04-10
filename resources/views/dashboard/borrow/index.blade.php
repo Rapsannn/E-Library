@@ -9,12 +9,11 @@
                     <span class="block sm:inline">{{ session('success') }}</span>
                 </div>
         @endsession
-      <a href="/dashboard/user/create" class="px-5 py-3 bg-sky-300 rounded-md text-gray-500 hover:bg-sky-400 transition">Tambah User</a>
     </div>
   </div>
  
   <div class="grid grid-cols-12 gap-4">
-    <div class="col-span-12 lg:col-span-12 p-4">
+    <div class="col-span-12 lg:col-span-11 p-4">
       <div class="relative overflow-x-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -23,19 +22,19 @@
                         No.
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Nama Pengguna
+                        Nama Peminjam
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Slug
+                        Judul Buku
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Username
+                        Tanggal Pinjam
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Email
+                        Batas Peminjam
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Role
+                        Status
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Acction
@@ -43,54 +42,68 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($users->count())
-                    @foreach ($users as $user)
+                @if ($borrows->count())
+                    @foreach ($borrows as $borrow)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-400">
                             {{ $loop->iteration }}
                         </th>
                         <td class="px-6 py-4">
-                            {{ $user->name }}
+                            {{ $borrow->user->name }}
                         </td>
-                        <td class="px-6 py-4">
-                            {{ $user->slug }}
+                        <td class="px-6 py-4 capitalize">
+                            {{ $borrow->book->name }}
                         </td>
-                        <td class="px-6 py-4">
-                            {{ $user->username }}
+                        <td class="px-6 py-4 capitalize">
+                            {{ $borrow->borrow_date->isoFormat('dddd, D MMMM Y') }}
                         </td>
-                        <td class="px-6 py-4">
-                            {{ $user->email }}
+                        <td class="px-6 py-4 capitalize">
+                            {{ $borrow->due_date->isoFormat('dddd, D MMMM Y') }}
                         </td>
-                        <td class="px-6 py-4">
-                            {{ $user->role }}
+                        <td class="px-6 py-4 capitalize">
+                            @if ($borrow->status == "diajukan")
+                                <p class="bg-yellow-500 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                            @elseif ($borrow->status == "dipinjam")
+                                <p class="bg-green-500 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                            @elseif ($borrow->status == "dikembalikan")
+                                <p class="bg-blue-500 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                            @elseif ($borrow->status == "ditolak")
+                                <p class="bg-red-500 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                            @endif
+
                         </td>
-                        <td class="px-6 py-4 flex gap-2">
-                                <form action="/dashboard/user/{{ $user->slug }}" method="POST" class="text-red-500 hover:text-red-700">
+                        <td class="px-6 py-4 gap-2">
+                            @if ($borrow->status == 'diajukan' || $borrow->status == 'dipinjam')
+                                <div class="text-yellow-300 hover:text-yellow-700 items-center">
+                                <a href="/dashboard/borrow/{{ $borrow->id }}/edit"><i class="fa-solid fa-pen-to-square"></i></i> Edit</a>
+                                </div>
+                            @elseif ($borrow->status == 'dikembalikan' || $borrow->status =='ditolak')
+                                <form action="/dashboard/borrow/{{ $borrow->id }}" method="POST" class="text-red-500 hover:text-red-700">
                                     @csrf
                                     @method('DELETE')
                                 <button type="submit" onclick="return confirm('Are you sure?')"><i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
                                 </form>
-                                <p>|</p>
-                                <div class="text-yellow-500 hover:text-yellow-700">
-                                <a href="/dashboard/user/{{ $user->slug }}/edit"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
-                                </div>
+                            @endif
+
+                                
                         </td>
                     </tr>  
                     @endforeach
                 @else
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                         <td colspan="7" class="px-6 py-4 text-white text-center font-semibold">
-                            Data Kosong
+                            Tidak Ada Data
                         </td>
-                    </tr>                   
+                    </tr>
+                
                 @endif
 
             </tbody>
         </table>
 
         {{-- pagination --}}
-        <div class="mt-4">
-            {{ $users->links() }}
+        <div class="mt-6">
+            {{ $borrows->links() }}
         </div>
       </div>
     </div>
