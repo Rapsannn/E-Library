@@ -29,7 +29,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium uppercase">Tanggal Peminjaman</th>
                             <th class="px-6 py-3 text-left text-xs font-medium uppercase">Batas Peminjaman</th>
                             <th class="px-6 py-3 text-left text-xs font-medium uppercase">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium uppercase">Action</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase">Detail</th>
                         </tr>
                     </thead>
  
@@ -58,7 +58,7 @@
                                         
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="#" class="bg-blue-200 px-2 py-1 rounded-lg text-blue-500 hover:bg-blue-500 hover:text-white">
+                                        <a href="/borrow/detail/{{ $borrow->id }}" class="bg-blue-200 px-2 py-1 rounded-lg text-blue-500 hover:bg-blue-500 hover:text-white">
                                             <i class="fa-regular fa-eye"></i>
                                         </a>
                                     </td>

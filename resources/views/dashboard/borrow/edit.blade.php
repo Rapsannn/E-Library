@@ -12,7 +12,7 @@
         <div>
           <label for="user_id" class="block text-sm font-medium text-gray-700">Nama Peminjam</label>
           <input type="text" value="{{ $borrow->user->name }}" disabled
-            class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('user_id') border-red-500 @enderror">
+            class="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('user_id') border-red-500 @enderror">
           <input type="hidden" name="user_id" value="{{ $borrow->user_id }}">
           @error('user_id')
             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
@@ -42,7 +42,7 @@
         <div>
             <label for="due_date" class="block text-sm font-medium text-gray-700">Deadline Peminjaman</label>
             <input type="text" value="{{ $borrow->due_date->format('d M Y') }}" disabled
-              class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('due_date') border-red-500 @enderror">
+              class="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('due_date') border-red-500 @enderror">
             <input type="hidden" name="due_date" value="{{ $borrow->due_date }}">
             @error('due_date')
               <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
@@ -52,7 +52,7 @@
         <div>
             <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
             <select name="status" id="status" required
-            class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            class="p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 <option value=""></option>
                 <option value="diajukan" @selected(old('status', $borrow->status) == 'diajukan')>Diajukan</option>
                 <option value="dipinjam" @selected(old('status', $borrow->status) == 'dipinjam')>Dipinjam</option>
@@ -62,6 +62,15 @@
             @error('status')
             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
             @enderror
+        </div>
+        <!-- message Field -->
+        <div id="messageField" class="mt-4 hidden">
+          <label for="message" class="block text-sm font-medium text-gray-700">Pesan</label>
+          <textarea rows="3" type="text"
+            class="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('message') border-red-500 @enderror" placeholder="Tulis Alasan Anda Menolak"></textarea>
+          @error('message')
+            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+          @enderror
         </div>
         <!-- Submit Button -->
         <div>
@@ -74,5 +83,24 @@
     </div>
   </div>
 </div>
+
+<script>
+    const statusSelect = document.getElementById('status');
+    const messageField = document.getElementById('messageField');
+ 
+    function toggleMessageField() {
+        if (statusSelect.value === 'ditolak') {
+            messageField.classList.remove('hidden');
+        } else {
+            messageField.classList.add('hidden');
+        }
+    }
+ 
+    // jalan saat halaman load
+    toggleMessageField();
+ 
+    // jalan saat user ganti select
+    statusSelect.addEventListener('change', toggleMessageField);
+</script>
  
 @endsection
