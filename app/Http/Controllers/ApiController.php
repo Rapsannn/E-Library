@@ -163,4 +163,32 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Login Gagal'], 401);
     }
+
+    public function bookByStatus(string $status)
+    {
+        $books = Book::where('status', $status)->get();
+
+        if ($books->isEmpty()) {
+            return response()->json(['message' => 'Buku Tidak Ditemukan'], 404);
+        }
+
+        return response()->json($books);
+    }
+
+    public function search(string $search)
+    {
+        $books = Book::where('name', 'like', '%' . $search . '%')
+        ->orWhere('body', 'like', '%' . $search . '%')->get();
+
+        if ($books->count()) {
+            return response()->json([
+                'message' => 'Buku Ditemukan',
+                'data' => $books
+            ], 404);
+        } else {
+            return response()->json(['message' => 'Buku Tidak Ditemukan'], 404);
+        }
+
+        return response()->json($books);
+    }
 }
