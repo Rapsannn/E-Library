@@ -64,7 +64,7 @@
 
         <!-- Footer -->
         <div class="mt-12 text-center text-gray-500 text-sm">
-            © {{ date('Y') }} E-Library. All rights reserved.
+            © 2026 E-Library. All rights reserved.
         </div>
     </div>
 </div>
